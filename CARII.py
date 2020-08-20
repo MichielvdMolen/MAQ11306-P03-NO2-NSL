@@ -74,7 +74,7 @@ class receptor:
       self.number_roadparts = widgets.widget_selection.Dropdown(
             options=[1,2],
             value = 1,
-            description='Nr road parts',
+            description='Nr road tracks',
             disabled=False,
             )
 
@@ -85,108 +85,129 @@ class receptor:
 
    def __init__(self):    
      
-     self.year = widgets.widget_selection.Dropdown(
-                     options=[2020,2025,2030],
-                     value = 2020,
-                     description='Year',
-                    disabled=False, 
-                     )
-
+     align_kw = dict( _css   = (('.widget-label', 'min-width', '5000ex'),),
+                      margin = '10px 20px 5px 12px'
+                    )
+     style    = {'description_width': '150px'}
+     layout   = {'width': '300px'}
      self.RDW_x = widgets.BoundedFloatText(
                      value=133382.0,
                      min=0.,
                      max=280000.0,
                      step=10.,
-                     description='RDW-X:',
-                     disabled=False
-                      )
+                     description='RDW_x (m East):',
+                     disabled=False,
+                     style=style, layout=layout
+                     )
 
      self.RDW_y = widgets.BoundedFloatText(
-                   value = 454361.,
-                   min=30000.0,
-                   max=640000.0,
-                   description='RDW-Y:',
-                   disabled=False
-                    )
-      
-     display(self.year)
+                     value = 454361.,
+                     min=30000.0,
+                     max=640000.0,
+                     description='RDW_y (m North):',
+                     disabled=False,
+                     style=style, layout=layout
+                     )
+
+     self.year = widgets.widget_selection.Dropdown(
+                     options=[2020,2025,2030],
+                     value = 2020,
+                     description='Year',
+                     disabled=False,
+                     style=style, layout=layout
+                     )
+       
      display(self.RDW_x)
      display(self.RDW_y)
-
+     display(self.year)
+    
 class rijbaan:
   
 
    def __init__(self,nrr):    
+      style    = {'description_width': '200px'}
+      layout   = {'width': '400px'}
+
      
       self.Srmwegtype = widgets.widget_selection.Dropdown(
          options=['non-motorway','motorway'],
          value='non-motorway',
-         description='Srmwegtype',
+         description='SCM Road Type',
          disabled=False,
+         style=style, layout=layout
           )
 
       self.verkeer = widgets.widget_selection.Dropdown(
-         options=['stad normaal','stad doorstromend','buitenweg'],
-         value = 'stad normaal',
-         description='Verkeerstype',
+         options=['urban normal','urban less congestion','provincial road'],
+         value = 'urban normal',
+         description='Traffic Type',
          disabled=False,
+         style=style, layout=layout
          )   
       self.FS = widgets.BoundedFloatText(
-          value=0.,
-          min=0.,
-          max=1.0,
-          step=0.01,
-          description='FS:',
-          disabled=False
+         value=0.,
+         min=0.,
+         max=1.0,
+         step=0.01,
+         description='f_s Fraction Stagnation (-)',
+         disabled=False,
+         style=style, layout=layout
          )
       self.LWV = widgets.BoundedFloatText(
-          value=6800.,
-          min=0.,
-          max=100000000.0,
-          step=100,
-          description='LWV:',
-          disabled=False
+         value=6800.,
+         min=0.,
+         max=100000000.0,
+         step=100,
+         description='N_l Intensity Light (veh/24h)',
+         disabled=False,
+         style=style, layout=layout
          )
       self.MWV = widgets.BoundedFloatText(
           value=165.,
           min=0.,
           max=100000000.0,
           step=100,
-          description='MWV:',
-          disabled=False
+          description='N_m Intensity Middle (veh/24h):',
+          disabled=False,
+         style=style, layout=layout
          )
       self.HWV = widgets.BoundedFloatText(
           value=65.,
           min=0.,
           max=100000000.0,
           step=100,
-          description='HWV:',
-          disabled=False
+          description='N_h Intensity Heavy (veh/24h):',
+          disabled=False,
+         style=style, layout=layout
          )      
       self.buses = widgets.BoundedFloatText(
           value=0.,
           min=0.,
           max=100000000.0,
           step=100,
-          description='Buses:',
-          disabled=False
+          description='N_b Intensity Buses (veh/24h)',
+          disabled=False,
+         style=style, layout=layout
          )
       self.wegtype = widgets.widget_selection.Dropdown(
          options=['1','2','3','4'],
          value = '1',
-         description='Wegtype',
+         description='Road Type',
          disabled=False,
+         style=style, layout=layout
          )
       self.boomfrac = widgets.widget_selection.Dropdown(
          options=[1.0,1.25,1.5],
          value = 1.0,
-         description='Tree factor',
+         description='f_t Tree factor',
          disabled=False,
+         style=style, layout=layout
          )
       self.dist = widgets.FloatText(
          value=13.0,
-         description='Distance',
-         disabled=False
+         description='Distance (m)',
+         disabled=False,
+         style=style, layout=layout
          )
   
       print('Give parameters for road section: ',nrr+1)
@@ -200,7 +221,7 @@ class rijbaan:
       display(self.wegtype)
       display(self.boomfrac)
       display(self.dist)
-
+    
 def read_meteo(xloc,yloc,dir):
     
 
